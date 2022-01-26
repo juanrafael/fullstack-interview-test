@@ -27,16 +27,7 @@ class CommitRepository:
         return self.get_files_changed(commit, get_commit)
 
     def get_files_changed(self, commit, commit_dict: dict):
-        files = [File(file.b_blob.name, file.b_blob.type, file.b_blob.data_stream.read().decode('utf-8')).serialize() for file in commit.diff('HEAD~1').iter_change_type('M')]
-        #print([dir(blob) for blob in commit.stats])
-        print(commit.stats.files)
-        print(commit.stats.total)
-
-        for diff in commit.diff('HEAD~1'):
-            print('######## ##########')
-            print(diff.change_type)
-            print(f"{diff.a_path} -> {diff.b_path}")
-
+        files = [File(file).serialize() for file in commit.stats.files]
 
         commit_dict['files_changed'] = ChangesCommit(commit.stats.total['files'], commit.stats.total['insertions'], commit.stats.total['deletions'], files).serialize()
 
