@@ -1,6 +1,7 @@
 import os
-from src.services.get_commit_by_hexsha import GetCommitByHexsha
 from flask import Flask, jsonify
+from flask_cors import CORS
+from src.services.get_commit_by_hexsha import GetCommitByHexsha
 from src.repositories.branch_repository import BranchRepository
 from src.services.get_branches import GetBranches
 
@@ -8,6 +9,8 @@ from src.services.get_commits_by_branch import GetCommitsByBranch
 from src.repositories.commit_repository import CommitRepository
 
 app = Flask(__name__)
+
+CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
 
 path = os.getcwd()
 
