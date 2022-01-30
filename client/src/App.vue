@@ -13,7 +13,7 @@
               <a @click="changeView('Branch')" class="nav-link py-3" :class="view=='Branch' ? 'active' : ''" href="#">Branches</a>
             </li>
             <li class="nav-item">
-              <a @click="changeView('Commit')" class="nav-link py-3" :class="view=='Commit' ? 'active' : ''" href="#">Commits</a>
+              <a @click="changeView('Commit')" class="nav-link py-3" :class="view=='Commit' || view == 'CommitDetail' ? 'active' : ''" href="#">Commits</a>
             </li>
             <li class="nav-item">
               <a class="nav-link py-3" :class="view=='PullRequest' ? 'active' : ''" href="#">Pull request</a>
@@ -21,7 +21,7 @@
           </ul>
         </div>
         <transition name="component-fade" mode="out-in">
-          <component :is="view"></component>
+          <component :is="view" :branch_name="branch_name" @clickBranch="selectBranch" @viewCommit="getCommit" :get_hexsha="hexsha"></component>
         </transition>
       </div>
     </main>
@@ -31,21 +31,34 @@
 <script>
 import Branch from './components/Branch.vue'
 import Commit from './components/Commit.vue'
+import CommitDetail from './components/CommitDetail.vue';
 
 export default {
   name: 'App',
   components: {
     Branch,
     Commit,
+    CommitDetail,
   },
   data() {
     return {
       view: 'Branch',
+      branch_name: '',
+      hexsha: '',
     }
   },
   methods: {
-    changeView(branch){
-      this.view = branch
+    changeView(component){
+      this.view = component;
+      this.branch_name = '';
+    },
+    selectBranch(branch){
+      this.branch_name = branch;
+      this.view = "Commit";
+    },
+    getCommit(hexsha){
+      this.hexsha = hexsha;
+      this.view = 'CommitDetail';
     }
   }
 }

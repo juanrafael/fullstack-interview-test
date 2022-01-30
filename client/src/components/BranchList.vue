@@ -14,6 +14,7 @@ export default {
     name: 'BranchList',
     props: {
         branches: Array,
+        selected_branch: String
     },
     data(){
         return {
@@ -25,7 +26,7 @@ export default {
             this.changeBranch();
         },
         branches(){
-            this.branch = this.branches[0].name;
+            this.branch = this.selected_branch;
         }
     },
     created(){

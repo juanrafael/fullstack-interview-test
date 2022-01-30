@@ -8,11 +8,14 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <span class="fas fa-code-branch"></span>
-                        <a href="#">
+                        <a href="#" @click="clickBranch(branch.name)">
                             <span class="badge bg-light text-dark">{{ branch.name }}</span>
                         </a>
                     </div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm">New pull request</button>
+                    <div class="">
+                        <button type="button" class="btn btn-outline-success btn-sm me-3" @click="clickBranch(branch.name)">View commits</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm">New pull request</button>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -51,6 +54,9 @@ export default {
             .catch(error => {
                 console.log(error.data);
             });
+        },
+        clickBranch(branch_name){
+            this.$emit("clickBranch", branch_name);
         }
     }
 }

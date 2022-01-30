@@ -4,6 +4,7 @@
             <div class="col-md-4 mb-3">
                 <BranchList
                 :branches="branches"
+                :selected_branch="select_branch"
                 @selectBranch="changeBranch"></BranchList>
             </div>
             <div class="col-md-4 mb-3">
@@ -20,14 +21,14 @@
                         <div class="d-flex align-items-center">
                             <div class="p-2"><i class="far fa-user fa-2x"></i></div>
                             <div class="">
-                                <a href="#" class="link-list">{{ commit.message }}</a>
+                                <a href="#" class="link-list" @click="viewCommit(commit.hexsha)">{{ commit.message }}</a>
                                 <br>
                                 <span class="badge text-dark">{{ commit.author.name }}</span>
                                 <span class="badge text-muted">committed on {{ formatDatetime(commit.datetime) }}</span>
                             </div>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-light border border-2">{{ commit.hexsha }}</button>
+                            <button type="button" class="btn btn-light border border-2" @click="viewCommit(commit.hexsha)">{{ commit.hexsha }}</button>
                         </div>
                     </div>
                 </li>
@@ -45,12 +46,16 @@ export default {
     components: {
         BranchList
     },
+    props: {
+        branch_name: String
+    },
     data(){
         return {
             branches: [],
             commits: [],
             branch: '',
             commit_filter: '',
+            select_branch: ''
         }
     },
     computed: {
@@ -94,7 +99,13 @@ export default {
             .get('branches')
             .then(data => {
                 const branches = data.data.data;
-                this.branches = branches
+                this.branches = branches;
+
+                if (!this.branch_name || this.branch_name == "") {
+                    this.select_branch = this.branches[0].name;
+                }else{
+                    this.select_branch = this.branch_name;
+                }
             })
             .catch(error => {
                 console.log(error.data);
@@ -117,6 +128,9 @@ export default {
         formatDatetime(datetime){
             const date_format = new Date(datetime);
             return date_format.toLocaleTimeString('en-us', { month: 'short', year: 'numeric', day: 'numeric', hour12: false });
+        },
+        viewCommit(hexsha){
+            this.$emit("viewCommit", hexsha);
         }
     }
 }
