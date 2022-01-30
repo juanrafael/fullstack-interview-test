@@ -2,21 +2,21 @@
   <div id="app">
     <header class="border-bottom border-2">
       <div class="container">
-        <h1 class="text-center py-3">MY GIT APPLICATION</h1>
+        <h1 class="fs-5 py-3 m-0">GIT APPLICATION</h1>
       </div>
     </header>
-    <main>
+    <main class="mb-5">
       <div class="container">
-        <div id="menu" class="my-4">
-          <ul class="nav nav-pills justify-content-center">
+        <div id="menu" class="border-bottom border-2 mb-3">
+          <ul class="nav">
             <li class="nav-item">
-              <a @click="changeView('Branch')" class="nav-link" :class="view=='Branch' ? 'active' : ''" href="#">Branches</a>
+              <a @click="changeView('Branch')" class="nav-link py-3" :class="view=='Branch' ? 'active' : ''" href="#">Branches</a>
             </li>
             <li class="nav-item">
-              <a @click="changeView('Commit')" class="nav-link" :class="view=='Commit' ? 'active' : ''" href="#">Commits</a>
+              <a @click="changeView('Commit')" class="nav-link py-3" :class="view=='Commit' ? 'active' : ''" href="#">Commits</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="view=='PullRequest' ? 'active' : ''" href="#">Link</a>
+              <a class="nav-link py-3" :class="view=='PullRequest' ? 'active' : ''" href="#">Pull request</a>
             </li>
           </ul>
         </div>
@@ -53,10 +53,20 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #303030;
+}
+
+.nav .nav-link{
+  color: #303030;
+}
+
+.nav .nav-link.active {
+  box-shadow: inset 0 -2px 0 0 #6666c4;
+  font-weight: 700;
+}
+
+.nav .nav-link:hover:not(.nav .nav-link.active) {
+    box-shadow: inset 0 -2px 0 0 #bfbfbf;
 }
 
 .component-fade-enter-active, .component-fade-leave-active {
