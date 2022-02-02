@@ -14,7 +14,7 @@
                     </div>
                     <div class="">
                         <button type="button" class="btn btn-outline-success btn-sm me-3" @click="clickBranch(branch.name)">View commits</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm">New pull request</button>
+                        <button @click="clickNewPullRequest(branch.name)" type="button" class="btn btn-outline-secondary btn-sm">New pull request</button>
                     </div>
                 </div>
             </li>
@@ -57,6 +57,9 @@ export default {
         },
         clickBranch(branch_name){
             this.$emit("clickBranch", branch_name);
+        },
+        clickNewPullRequest(branch_name){
+            this.$emit("clickNewPullRequest", branch_name);
         }
     }
 }

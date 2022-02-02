@@ -16,12 +16,21 @@
               <a @click="changeView('Commit')" class="nav-link py-3" :class="view=='Commit' || view == 'CommitDetail' ? 'active' : ''" href="#">Commits</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link py-3" :class="view=='PullRequest' ? 'active' : ''" href="#">Pull request</a>
+              <a @click="changeView('PullRequest')" class="nav-link py-3" :class="view=='PullRequest' || view=='CreatePullRequest' ? 'active' : ''" href="#">Pull request</a>
             </li>
           </ul>
         </div>
         <transition name="component-fade" mode="out-in">
-          <component :is="view" :branch_name="branch_name" @clickBranch="selectBranch" @viewCommit="getCommit" :get_hexsha="hexsha"></component>
+          <component
+            :is="view"
+            :branch_name="branch_name"
+            :get_hexsha="hexsha"
+            @clickBranch="selectBranch"
+            @viewCommit="getCommit"
+            @clickNewPullRequest="selectPullRequest"
+            @newPullRequest="getViewCreatePullRequest"
+          >
+          </component>
         </transition>
       </div>
     </main>
@@ -32,6 +41,8 @@
 import Branch from './components/Branch.vue'
 import Commit from './components/Commit.vue'
 import CommitDetail from './components/CommitDetail.vue';
+import PullRequest from './components/PullRequest.vue';
+import CreatePullRequest from './components/CreatePullRequest.vue';
 
 export default {
   name: 'App',
@@ -39,6 +50,8 @@ export default {
     Branch,
     Commit,
     CommitDetail,
+    PullRequest,
+    CreatePullRequest,
   },
   data() {
     return {
@@ -56,9 +69,16 @@ export default {
       this.branch_name = branch;
       this.view = "Commit";
     },
+    selectPullRequest(branch){
+      this.branch_name = branch;
+      this.view = "CreatePullRequest";
+    },
     getCommit(hexsha){
       this.hexsha = hexsha;
       this.view = 'CommitDetail';
+    },
+    getViewCreatePullRequest(){
+      this.view = 'CreatePullRequest';
     }
   }
 }
