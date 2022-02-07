@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  gitapp_db:
+    image: postgres
+    container_name: gitapp_db
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=gitapp
+    restart: always
+    ports:
+      - "6060:5432"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d/
+    networks:
+      gitapp:
+
+networks:
+  gitapp:
