@@ -1,14 +1,14 @@
 from git import Repo
 from src.entities.author import Author
+from config.connection import Connection
 
-class AuthorRepository:
+class AuthorRepository(Connection):
     def __init__(self) -> None:
-        pass
+        super().__init__()
 
-    @classmethod
-    def save_author(cls, name, email):
+    def save_author(self, name, email):
         repositorio = None
 
-    @classmethod
-    def get_authors(cls) -> Author:
-        pass
+    def get_authors(self):
+        sql = "SELECT * FROM authors;"
+        return self.get_all(sql)

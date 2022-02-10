@@ -8,6 +8,8 @@ from src.services.get_branches import GetBranches
 from src.services.get_commits_by_branch import GetCommitsByBranch
 from src.repositories.commit_repository import CommitRepository
 
+from src.repositories.author_repository import AuthorRepository
+
 app = Flask(__name__)
 
 CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
@@ -49,6 +51,21 @@ def commits_by_hexsha(hexsha):
         commit = GetCommitByHexsha(CommitRepository(path=path))
         return jsonify({
             "data": commit.execute(hexsha),
+            "message": "success!"
+        }), 202
+    except Exception as e:
+        return jsonify({
+            "message": str(e),
+            "data": []
+        }), 404
+
+
+@app.route('/authors')
+def authors():
+    try:
+        get_authors = AuthorRepository()
+        return jsonify({
+            "data": get_authors.get_authors(),
             "message": "success!"
         }), 202
     except Exception as e:

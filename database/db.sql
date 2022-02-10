@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS authors
     name VARCHAR(150) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
+
+\echo "Tabla authors creada"
 
 CREATE TABLE IF NOT EXISTS pull_requests
 (
@@ -19,4 +21,6 @@ CREATE TABLE IF NOT EXISTS pull_requests
     CONSTRAINT fk_author
         FOREIGN KEY (author_id)
             REFERENCES authors(id)
-)
+);
+
+\echo "Tabla pull_requests creada"
