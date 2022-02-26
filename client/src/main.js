@@ -2,6 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import axios from './plugins/axios';
 
+import 'izitoast/dist/css/iziToast.min.css';
+
 Vue.use(axios);
 Vue.config.productionTip = false;
 

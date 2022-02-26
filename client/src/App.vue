@@ -29,6 +29,7 @@
             @viewCommit="getCommit"
             @clickNewPullRequest="selectPullRequest"
             @newPullRequest="getViewCreatePullRequest"
+            @viewPullRequests="changeView"
           >
           </component>
         </transition>

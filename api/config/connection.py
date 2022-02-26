@@ -3,8 +3,8 @@ import psycopg2
 
 USER="root"
 PASSWORD="root"
-HOST="localhost"
-PORT="6060"
+HOST="gitapp_db"
+PORT="5432"
 DATABASE="gitapp"
 
 class Connection:

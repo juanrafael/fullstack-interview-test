@@ -2,23 +2,23 @@
     <div>
         <div class="row d-flex justify-content-between">
             <div class="col-md-9 mb-3">
-                <input type="text" class="form-control" placeholder="Filter pull request">
+                <input type="text" class="form-control" placeholder="Filter pull request" v-model="pr_filter">
             </div>
             <div class="col-md-3 mb-3 d-grid">
                 <button type="button" class="btn btn-success" @click="viewCreatePullRequest()">New pull request</button>
             </div>
         </div>
         <div class="card">
-            <ul v-if="pull_requests.length != 0" class="list-group list-group-flush">
-                <li v-for="(pr, id) in pull_requests" :key="id" class="list-group-item py-2">
+            <ul v-if="filterPR.length != 0" class="list-group list-group-flush">
+                <li v-for="(pr, id) in filterPR" :key="id" class="list-group-item py-2">
                     <div class="d-flex justify-content-between py-1">
                         <div class="">
                             <a href="#" class="link-list">
-                                {{ pr.name }}
+                                {{ pr.title }}
                             </a>
                             <br>
-                            <span class="badge text-dark">{{ pr.author_name }}</span>
-                            <span class="badge text-muted">created at 27/10/2021</span>
+                            <span class="badge text-dark">{{ pr.author }}</span>
+                            <span class="badge text-muted">created at {{ pr.created_at }}</span>
                         </div>
                     </div>
                 </li>
@@ -35,15 +35,28 @@ export default {
     name: 'PullRequest',
     data(){
         return {
-            pull_requests: [
-                {name: '1er pull request', author_name: 'alejandro rafael chavez'},
-                {name: '2do pull request', author_name: 'Pablo rafael chavez'}
-            ]
+            pull_requests: [],
+            pr_filter: ''
         }
+    },
+    computed: {
+        filterPR(){
+            return this.pull_requests.filter(pr => pr.title.toLowerCase().includes(this.pr_filter.toLowerCase()));
+        }
+    },
+    created(){
+        this.getPullRequests();
     },
     methods: {
         viewCreatePullRequest(){
             this.$emit('newPullRequest');
+        },
+        getPullRequests(){
+            this.$axios.get('pull_request')
+            .then(response => {
+                this.pull_requests = response.data.data;
+            })
+            .catch(error => console.log(error.data));
         }
     }
 }

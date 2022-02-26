@@ -17,5 +17,29 @@ services:
     networks:
       gitapp:
 
+  gitapp_server:
+    container_name: gitapp_server
+    build: ./api
+    depends_on:
+      - gitapp_db
+    networks:
+      gitapp:
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./api:/app
+    environment:
+      FLASK_ENV: development
+
+  gitapp_client:
+    container_name: gitapp_client
+    build: ./client
+    ports:
+      - "8080:3000"
+    networks:
+      gitapp:
+    volumes:
+      - ./client:/app
+
 networks:
   gitapp:

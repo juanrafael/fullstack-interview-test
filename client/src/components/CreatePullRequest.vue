@@ -70,6 +70,7 @@
 <script>
 
 import BranchList from './BranchList.vue';
+import iziToast from 'izitoast';
 
 export default {
     name: 'CreatePullRequest',
@@ -122,7 +123,7 @@ export default {
                 this.select_branch_target = this.branches[0].name;
             })
             .catch(error => {
-                console.log(error.data);
+                console.error(error.data);
             });
         },
         changeBranchSource(branch) {
@@ -132,12 +133,28 @@ export default {
             this.select_branch_target = branch;
         },
         savePullRequest(){
-            console.log(
-                this.select_branch_source,
-                this.select_branch_target,
-                this.title,
-                this.description
-            );
+            this.$axios
+            .post('pull_request',
+            {
+                branch_source: this.select_branch_source,
+                branch_target: this.select_branch_target,
+                title: this.title,
+                description: this.description
+            })
+            .then(response => {
+                iziToast.success({
+                    title: 'Success',
+                    message: response.data.message
+                })
+
+                this.$emit("viewPullRequests", 'PullRequest');
+            })
+            .catch(error => {
+                iziToast.error({
+                    title: 'Error',
+                    message: error.data.message
+                })
+            });
         }
     }
 }
