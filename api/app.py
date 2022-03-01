@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 CORS(app, resources={r"*": {"origins": "*"}})
 
-path = os.getcwd()
+path = os.getcwd() + "/repo"
 
 @app.route('/')
 def hello_world():

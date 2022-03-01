@@ -15,7 +15,5 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
-RUN git clone https://github.com/juanrafael/fullstack-interview-test.git repo
-
 # Executable commands
-CMD [ "flask", "run", "--host=0.0.0.0", "--port=4040"]
+CMD git clone https://github.com/juanrafael/fullstack-interview-test.git repo && flask run --host=0.0.0.0 --port=4040
